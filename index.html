@@ -28,7 +28,7 @@
 
 				oTag.style.height  = oInfo.offsetHeight - 5 + "px";
 
-				console.log(oInfo.offsetHeight);
+//				console.log(oInfo.offsetHeight);
 
 			if (oWidth<700) {
 
@@ -90,6 +90,7 @@
 
 });//返回变换结果
 
+
 		} 
 	</script>
 
@@ -122,7 +123,7 @@
 				</div>
 			</div>
 			<div class="tag_left" id="cnt_3">
-				<div class="gallery">
+				<div class="gallery" id="img-btn">
 					<div class="float-lt"><img src="images/fs2.jpg" alt=""></div>
 					<div class="float-lt"><img src="images/fs2.jpg" alt=""></div>
 					<div class="float-lt"><img src="images/fs2.jpg" alt=""></div>
@@ -171,7 +172,6 @@
 
 		aBtn[i].onclick = function(){
 
-			console.log(this.index );
 
  	        for (var j =0; j < 5; j++) {
 		
@@ -188,6 +188,83 @@
  	    }
  	}
 // tab切换
+
+
+//大小切换
+	var oDiv = document.getElementById('img-btn'),
+
+		oImg = oDiv.getElementsByTagName('img');
+
+	var timer = null;
+
+	function changeFn(obj,iSpeed,iModel) {
+
+		clearInterval(timer);
+
+		var  oHeight = oDiv.clientHeight,
+				oWidth = parseInt(oDiv.clientWidth*0.85);
+
+		if(parseInt(obj.offsetWidth) == oWidth){
+
+			iSpeed = -iSpeed;
+
+		}else {
+
+			iSpeed = iSpeed;
+
+		}
+//		console.log(obj.offsetWidth,oWidth)
+
+		timer = setInterval(function () {
+
+		var oWidth2	= obj.clientWidth;
+
+			if (oWidth2 - oWidth > 0) {
+
+				obj.style.width = oWidth + 'px';
+
+				clearInterval(timer);
+
+			}else  {
+
+				obj.style.width = oWidth2 + iSpeed + 'px';
+
+				if(oWidth2 < iModel){
+
+					obj.style.width = iModel;
+
+					clearInterval(timer);
+				}
+
+			}
+
+		},10)
+
+	}
+
+	var oBtn = oDiv.getElementsByTagName('div');
+
+		for (var i = 0 ; i < oBtn.length ; i++){
+
+			oBtn[i].index = i;
+
+			oBtn[i].addEventListener("click",function () {
+
+				changeFn(this,10);
+
+				console.log(oBtn[this.index])
+
+				for (var j =0; j < 4; j++) {
+
+					oBtn[j].style.display = 'none';
+
+				}
+
+				oBtn[this.index].style.display = 'block';
+			})
+		}
+
+
 
  </script>
 </html>
